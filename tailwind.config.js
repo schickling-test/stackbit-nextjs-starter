@@ -15,20 +15,32 @@ module.exports = {
         extend: {
             colors: {
                 body: themeStyle.body,
-                headline: themeStyle.headline,
+                headlines: themeStyle.headlines,
                 primary: themeStyle.primary,
                 secondary: themeStyle.secondary,
                 neutral: themeStyle.neutral,
                 complementary: themeStyle.complementary,
-                'complementary-alt': themeStyle['complementary-alt'],
+                'complementary-alt': themeStyle.complementaryAlt,
                 info: themeStyle.info,
                 success: themeStyle.success,
                 warning: themeStyle.warning
-            }
+            },
+            fontFamily: {
+                body:  themeStyle.fontBody,
+                headlines: themeStyle.fontHeadlines
+            },
         }
     },
     variants: {
         extend: {}
     },
-    plugins: []
+    plugins: [
+        plugin(function ({ addBase, theme }) {
+            addBase({
+                '.sb-component-button-primary': { borderRadius: themeStyle.buttonPrimary.radius + 'px', textTransform: themeStyle.buttonPrimary.case },
+                '.sb-component-button-secondary': { borderRadius: themeStyle.buttonSecondary.radius + 'px', textTransform: themeStyle.buttonSecondary.case }
+            })
+        })
+    ]
 };
+

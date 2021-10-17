@@ -1,6 +1,6 @@
 stackbitVersion: ~0.4.0
 ssgName: nextjs
-nodeVersion: "14"
+nodeVersion: '14'
 cmsName: git
 assets:
   referenceType: static
@@ -27,19 +27,41 @@ models:
   ThemeStyle:
     type: data
     name: ThemeStyle
-    label: Theme Style
+    label: Theme style
     file: theme-style.json
     fieldGroups:
+      - name: text-styles
+        label: Text styles
       - name: color-palettes
-        label: Color Palettes
+        label: Color palettes
+      - name: button-styles
+        label: Button styles
     fields:
+      - type: enum
+        name: fontHeadlines
+        label: Font - headlines & subtitles
+        group: text-styles
+        options:
+          - label: Web safe sans
+            value: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+          - label: Web safe serif
+            value: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif
+      - type: enum
+        name: fontBody
+        label: Font - body & captions
+        group: text-styles
+        options:
+          - label: Sytem sans
+            value: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+          - label: System serif
+            value: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif
       - type: color
         name: body
         label: Body
         group: color-palettes
       - type: color
-        name: headline
-        label: Headline
+        name: headlines
+        label: Headlines
         group: color-palettes
       - type: color
         name: primary
@@ -58,7 +80,7 @@ models:
         label: Complementary
         group: color-palettes
       - type: color
-        name: complementary-alt
+        name: complementaryAlt
         label: Complementary Alt
         group: color-palettes
       - type: color
@@ -73,3 +95,43 @@ models:
         name: warning
         label: Warning
         group: color-palettes
+      - type: object
+        name: buttonPrimary
+        label: Primary button
+        group: button-styles
+        extends:
+          - ThemeStyleButtonStyle
+      - type: object
+        name: buttonSecondary
+        label: Secondary button
+        group: button-styles
+        extends:
+          - ThemeStyleButtonStyle
+  ThemeStyleButtonStyle:
+    type: object
+    label: Button style
+    fields:
+      - type: enum
+        name: radius
+        label: Corner radius
+        controlType: button-group
+        options:
+          - label: None
+            value: 0
+          - label: Small
+            value: 4
+          - label: Large
+            value: 9999
+      - type: enum
+        name: case
+        label: Case
+        controlType: button-group
+        options:
+          - label: default
+            value: none
+          - label: ag
+            value: lowercase
+          - label: Ag
+            value: capitalize
+          - label: AG
+            value: uppercase
