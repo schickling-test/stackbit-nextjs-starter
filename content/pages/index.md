@@ -1,6 +1,6 @@
 ---
 title: Home
-layout: PageLayout
+type: PageLayout
 sections:
   - type: HeroSection
     backgroundWidth: full

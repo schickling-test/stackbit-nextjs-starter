@@ -1,31 +1,35 @@
 import React from 'react';
-import { sourcebitDataClient } from 'sourcebit-target-next';
-import { withRemoteDataUpdates } from 'sourcebit-target-next/with-remote-data-updates';
+import { allPageLayouts, config } from '.contentlayer/data';
 import { getComponent } from '@stackbit/components';
 
 function Page(props) {
+    console.log({ props });
     const { page, site } = props;
-    const { layout } = page;
+    const { type } = page;
 
-    if (!layout) {
+    if (!type) {
         throw new Error(`page has no layout, page '${props.path}'`);
     }
-    const PageLayout = getComponent(layout);
+    const PageLayout = getComponent(type);
     if (!PageLayout) {
-        throw new Error(`no page layout matching the layout: ${layout}`);
+        throw new Error(`no page layout matching the layout: ${type}`);
     }
     return <PageLayout page={page} site={site} />;
 }
 
 export async function getStaticPaths() {
-    let data = await sourcebitDataClient.getData();
-    const paths = data.pages.map((page) => page.path);
+    const paths = allPageLayouts.map((_) => ({ params: { slug: _.path.split('/') } }));
+    console.log(JSON.stringify({ paths }));
     return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
-    const props = await sourcebitDataClient.getStaticPropsForPageAtPath(params.slug);
+    // const props = await sourcebitDataClient.getStaticPropsForPageAtPath(params.slug);
+    console.log({ params });
+    const pagePath = params.slug?.join('/') ?? '';
+    const page = allPageLayouts.find((_) => _.path === pagePath);
+    const props = { page, site: config };
     return { props };
 }
 
-export default withRemoteDataUpdates(Page);
+export default Page;
