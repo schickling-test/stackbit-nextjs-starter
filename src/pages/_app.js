@@ -5,9 +5,9 @@ import Head from 'next/head';
 export default function MyApp({ Component, pageProps }) {
     return (
         <>
-            {/* <Head>
+            <Head>
                 <link rel="icon" href="/favicon.svg" />
-            </Head> */}
+            </Head>
             <Component {...pageProps} />;
         </>
     );
